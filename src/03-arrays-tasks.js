@@ -201,7 +201,7 @@ function getTail(arr, n) {
  *    +'30,31,32,33,34'
  */
 function toCsvText(arr) {
-  return arr.join('');
+  return arr.map((a) => a.join()).join('\n');
 }
 
 /**
@@ -458,8 +458,10 @@ function sortCitiesArray(/* arr */) {
  *           [0,0,0,1,0],
  *           [0,0,0,0,1]]
  */
-function getIdentityMatrix(/* n */) {
-  throw new Error('Not implemented');
+// popacz tutej potem
+function getIdentityMatrix(n) {
+  return Array(n).fill(0).map((el1, i) => Array(n).fill(0)
+    .map((el2, j) => 1 - Math.min(Math.abs(i - j), 1)));
 }
 
 /**
@@ -476,6 +478,8 @@ function getIdentityMatrix(/* n */) {
  *     3, 3   => [ 3 ]
  */
 function getIntervalArray(/* start, end */) {
+  // const _ = require('lodash');
+  // return _.range(start, end);
   throw new Error('Not implemented');
 }
 
@@ -490,8 +494,9 @@ function getIntervalArray(/* start, end */) {
  *   [ 'a', 'a', 'a', 'a' ]  => [ 'a' ]
  *   [ 1, 1, 2, 2, 3, 3, 4, 4] => [ 1, 2, 3, 4]
  */
-function distinct(/* arr */) {
-  throw new Error('Not implemented');
+function distinct(arr) {
+  const filtered = new Set(arr);
+  return [...filtered];
 }
 
 /**
@@ -542,8 +547,8 @@ function group(/* array, keySelector, valueSelector */) {
  *   [[1, 2], [3, 4], [5, 6]], (x) => x     =>   [ 1, 2, 3, 4, 5, 6 ]
  *   ['one','two','three'], x=>x.split('')  =>   ['o','n','e','t','w','o','t','h','r','e','e']
  */
-function selectMany(/* arr, childrenSelector */) {
-  throw new Error('Not implemented');
+function selectMany(arr, childrenSelector) {
+  return arr.flatMap(childrenSelector);
 }
 
 
@@ -582,8 +587,19 @@ function getElementByIndexes(/* arr, indexes */) {
  *   [ 1, 2, 3, 4, 5, 6, 7, 8 ]   =>  [ 5, 6, 7, 8, 1, 2, 3, 4 ]
  *
  */
-function swapHeadAndTail(/* arr */) {
-  throw new Error('Not implemented');
+function swapHeadAndTail(arr) {
+  let newArr = [];
+  if (arr.length % 2 === 0) {
+    const head = arr.slice(0, arr.length / 2);
+    const tail = arr.slice(arr.length / 2);
+    newArr = newArr.concat(tail, head);
+    return newArr;
+  }
+  const head = arr.slice(0, Math.floor(arr.length / 2));
+  const middle = arr.slice(Math.floor(arr.length / 2), Math.ceil(arr.length / 2));
+  const tail = arr.slice(Math.ceil(arr.length / 2));
+  newArr = newArr.concat(tail, middle, head);
+  return newArr;
 }
 
 
