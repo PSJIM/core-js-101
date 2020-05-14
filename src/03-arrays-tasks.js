@@ -270,8 +270,10 @@ function getSecondItems(arr) {
  *  [ 'a', 'b', 'c', null ] => [ 'a', 'b','b', 'c','c','c',  null,null,null,null ]
  *  [ 1,2,3,4,5 ] => [ 1, 2,2, 3,3,3, 4,4,4,4, 5,5,5,5,5 ]
  */
-function propagateItemsByPositionIndex(/* arr */) {
-  throw new Error('Not implemented');
+function propagateItemsByPositionIndex(arr) {
+  let result = [];
+  result = arr.reduce((a, b, i) => a.concat(new Array(i + 1).fill(b)), []);
+  return result;
 }
 
 
@@ -477,10 +479,10 @@ function getIdentityMatrix(n) {
  *     0, 100 => [ 0, 1, 2, ..., 100 ]
  *     3, 3   => [ 3 ]
  */
-function getIntervalArray(/* start, end */) {
+function getIntervalArray(start, end) {
   // const _ = require('lodash');
   // return _.range(start, end);
-  throw new Error('Not implemented');
+  return Array(end - start + 1).fill(start).map((a, b) => a + b);
 }
 
 /**

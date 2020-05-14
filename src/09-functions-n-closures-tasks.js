@@ -3,7 +3,7 @@
  * Plese read the following tutorial before implementing tasks:                                *
  * https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Functions                     *
  * https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Function   *
- * https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Functions/arguments       *
+ * https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Functions/args       *
  * https://developer.mozilla.org/en-US/docs/Web/JavaScript/Closures                            *
  *                                                                                             *
  ********************************************************************************************* */
@@ -23,9 +23,7 @@
  *   getComposition(Math.sin, Math.asin)(x) => Math.sin(Math.asin(x))
  *
  */
-function getComposition(/* f, g */) {
-  throw new Error('Not implemented');
-}
+const getComposition = (...functions) => (args) => functions.reduceRight((ar, fn) => fn(ar), args);
 
 
 /**
@@ -44,8 +42,10 @@ function getComposition(/* f, g */) {
  *   power05(16) => 4
  *
  */
-function getPowerFunction(/* exponent */) {
-  throw new Error('Not implemented');
+function getPowerFunction(exponent) {
+  return function sth(n) {
+    return n ** exponent;
+  };
 }
 
 
@@ -62,8 +62,8 @@ function getPowerFunction(/* exponent */) {
  *   getPolynom(8)     => y = 8
  *   getPolynom()      => null
  */
-function getPolynom() {
-  throw new Error('Not implemented');
+function getPolynom(...args) {
+  return (x) => args.reduceRight((acc, n, i) => acc + n * x ** i, 0);
 }
 
 
@@ -81,8 +81,15 @@ function getPolynom() {
  *   ...
  *   memoizer() => the same random number  (next run, returns the previous cached result)
  */
-function memoize(/* func */) {
-  throw new Error('Not implemented');
+function memoize(func) {
+  const cache = {};
+  return function sth(...args) {
+    const key = JSON.stringify(args);
+    if (!(key in cache)) {
+      cache[key] = func(...args);
+    }
+    return cache[key];
+  };
 }
 
 
@@ -109,7 +116,7 @@ function retry(/* func, attempts */) {
 /**
  * Returns the logging wrapper for the specified method,
  * Logger has to log the start and end of calling the specified function.
- * Logger has to log the arguments of invoked function.
+ * Logger has to log the args of invoked function.
  * The fromat of output log is:
  * <function name>(<arg1>, <arg2>,...,<argN>) starts
  * <function name>(<arg1>, <arg2>,...,<argN>) ends
@@ -135,7 +142,7 @@ function logger(/* func, logFunc */) {
 
 
 /**
- * Return the function with partial applied arguments
+ * Return the function with partial applied args
  *
  * @param {Function} fn
  * @return {Function}

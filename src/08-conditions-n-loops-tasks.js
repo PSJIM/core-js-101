@@ -355,7 +355,25 @@ function getDigitalRoot(num) {
  *   '{[(<{[]}>)]}' = true
  */
 function isBracketsBalanced(str) {
-  return str;
+  const helperArr = [];
+  const brackets = {
+    '[': ']',
+    '{': '}',
+    '(': ')',
+    '<': '>',
+  };
+  for (let n = 0; n < str.length; n += 1) {
+    if (str[n] === '[' || str[n] === '{'
+    || str[n] === '(' || str[n] === '<') {
+      helperArr.push(str[n]);
+    } else {
+      const last = helperArr.pop();
+      if (str[n] !== brackets[last]) {
+        return false;
+      }
+    }
+  }
+  return helperArr.length === 0;
 }
 
 
@@ -379,8 +397,8 @@ function isBracketsBalanced(str) {
  *    365, 4  => '11231'
  *    365, 10 => '365'
  */
-function toNaryString(/* num, n */) {
-  throw new Error('Not implemented');
+function toNaryString(num, n) {
+  return Number(num.toString(n));
 }
 
 
@@ -396,8 +414,8 @@ function toNaryString(/* num, n */) {
  *   ['/web/assets/style.css', '/.bin/mocha',  '/read.me'] => '/'
  *   ['/web/favicon.ico', '/web-scripts/dump', '/webalizer/logs'] => '/'
  */
-function getCommonDirectoryPath(/* pathes */) {
-  throw new Error('Not implemented');
+function getCommonDirectoryPath(pathes) {
+  return pathes;
 }
 
 
@@ -419,8 +437,21 @@ function getCommonDirectoryPath(/* pathes */) {
  *                         [ 6 ]]
  *
  */
-function getMatrixProduct(/* m1, m2 */) {
-  throw new Error('Not implemented');
+function getMatrixProduct(m1, m2) {
+  const m1NumRows = m1.length;
+  const m1NumCols = m1[0].length;
+  const m2NumCols = m2[0].length;
+  const result = new Array(m1NumRows);
+  for (let R = 0; R < m1NumRows; R += 1) {
+    result[R] = new Array(m2NumCols);
+    for (let C = 0; C < m2NumCols; C += 1) {
+      result[R][C] = 0;
+      for (let n = 0; n < m1NumCols; n += 1) {
+        result[R][C] += m1[R][n] * m2[n][C];
+      }
+    }
+  }
+  return result;
 }
 
 
@@ -454,8 +485,59 @@ function getMatrixProduct(/* m1, m2 */) {
  *    [    ,   ,    ]]
  *
  */
-function evaluateTicTacToePosition(/* position */) {
-  throw new Error('Not implemented');
+function evaluateTicTacToePosition(position) {
+  if ((position[0][0] === 'X'
+  && position[0][1] === 'X'
+  && position[0][2] === 'X')
+  || (position[0][0] === 'X'
+  && position[1][0] === 'X'
+  && position[2][0] === 'X')
+  || (position[2][0] === 'X'
+  && position[2][1] === 'X'
+  && position[2][2] === 'X')
+  || (position[0][2] === 'X'
+  && position[1][2] === 'X'
+  && position[2][2] === 'X')
+  || (position[0][0] === 'X'
+  && position[1][1] === 'X'
+  && position[2][2] === 'X')
+  || (position[1][0] === 'X'
+  && position[1][1] === 'X'
+  && position[1][2] === 'X')
+  || (position[0][1] === 'X'
+  && position[1][1] === 'X'
+  && position[2][1] === 'X')
+  || (position[0][2] === 'X'
+  && position[1][1] === 'X'
+  && position[2][0] === 'X')) {
+    return 'X';
+  }
+  if ((position[0][0] === '0'
+  && position[0][1] === '0'
+  && position[0][2] === '0')
+  || (position[0][0] === '0'
+  && position[1][0] === '0'
+  && position[2][0] === '0')
+  || (position[2][0] === '0'
+  && position[2][1] === '0')
+  || (position[0][2] === '0'
+  && position[1][2] === '0'
+  && position[2][2] === '0')
+  || (position[0][0] === '0'
+  && position[1][1] === '0'
+  && position[2][2] === '0')
+  || (position[1][0] === '0'
+  && position[1][1] === '0'
+  && position[1][2] === '0')
+  || (position[0][0] === '0'
+  && position[1][1] === '0'
+  && position[2][2] === '0')
+  || (position[0][2] === '0'
+  && position[1][1] === '0'
+  && position[2][0] === '0')) {
+    return '0';
+  }
+  return undefined;
 }
 
 
